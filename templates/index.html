@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino R4 WiFi</title>
+    <style>
+        .container{
+            width: 100%;
+            height: 90vh;
+            display: flex;
+            flex-direction:column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .top{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+        form{
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+        }
+        .box{
+            width: 50%;
+            border: 1px solid green;
+            padding: 0 12px;
+            border-radius: 12px;
+        }
+        .box input{
+            width: 100%;
+            border: none;
+            outline: none;
+            height: 50px;
+        }
+        input[type='submit']{
+            width: 40%;
+            border-radius: 12px;
+            border: none;
+            height: 30px;
+        }
+        @media screen and (max-width: 900px){
+            .container{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .top{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            form{
+                width: 80%;
+                padding: 19px 40px;
+            }
+            .box{
+                width: 100%;
+            }
+            .box input{
+                width: 100%;
+                background-color: transparent;
+            }
+            input[type='submit']{
+                width: 90%;
+                height: 40px;
+                font-size: 20px;
+                font-weight: bold;
+                background: linear-gradient(90deg, #ddd, #049730);
+                color: #ddd;
+                cursor:pointer;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top">
+            <h2>Arduino R4 WiFi</h2>
+            <p>Connect your arduino R4 wifi device to the internet</p>
+        </div>
+        <form action="/submit" method="post">
+            <div class="box"><input type="text" name="ip" placeholder="Enter your device ip:"/></div>
+            <div class="box"><input type="text" name="port" placeholder="Enter your device port:"/></div>
+            <input type="submit" value="Send"/>
+        </form>
+        <div>Your Device Ip Address: {{result}}</div>
+    </div>
+</body>
+</html>
