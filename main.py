@@ -1,43 +1,36 @@
-from flask import *
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import requests
 import os
+
 app = Flask(__name__)
 CORS(app)
-
-
-
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-
-
 @app.route("/submit", methods=['POST', 'GET'])
 def Web():
+    result = ""
     if request.method == 'POST':
-        ip = request.form['ip']
-        port = request.form['port']
-        print(f"Ip: {ip} \nPort: {port}")
-        url = f"http://{ip}:{port}"
+        ip = request.form.get('ip')
+        port = request.form.get('port')
+        print(f"Ip: {ip} Port: {port}")
+        url = f"http://{ip}:{port}/"
         try:
             response = requests.get(url, timeout=5)
-            result = f" {response.text}"
+            result = response.text
             print(result)
-            return render_template("index.html", result=result)
         except Exception as e:
             result = f"Connection: {e}"
             print(f"Error: {result}")
-        return render_template("index.html", result=result)
-        
-    return render_template('index.html')
-        
-    
+    return render_template("index.html", result=result)
+
 @app.route("/api", methods=['POST'])
 def App():
     try:
-        data = request.json
+        data = request.get_json(force=True)
         ip = data.get("ip")
         port = data.get("port")
         print(f"Received from App: {ip}:{port}")
@@ -48,8 +41,6 @@ def App():
         print(f"Error: {e}")
         return jsonify({"status": 500, "message": str(e)}), 500
 
-
-
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=port, debug=False)
